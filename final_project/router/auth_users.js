@@ -50,25 +50,26 @@ regd_users.post("/login", (req,res) => {
 });
 
 // Add a book review
-regd_users.put("/auth/review/:title", (req, res) => {
+regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
     const review = req.body.review;
     const username = req.session.authorization['username'];
-    const title = req.params.title;
-    let required = Object.values(books[0]).find(book => book.title === title); 
+    const isbn = req.params.isbn;
+    // let required = Object.values(books[0]).find(book => book.title === title); 
+    let required = books[0][isbn];
 
     required.reviews[username] = review;
     return res.status(300).json(required.reviews[username]);
     
 });
 
-regd_users.delete("/auth/review/:title", (req, res) => {
+regd_users.delete("/auth/review/:isbn", (req, res) => {
     //Write your code here
     //   const review = req.body.review;
       const username = req.session.authorization['username'];
-      const title = req.params.title;
-      let required = Object.values(books[0]).find(book => book.title === title); 
-  
+      const isbn = req.params.isbn;
+      let required = books[0][isbn]; 
+      console.log(required);
     //   required.reviews[username] = "";
       return res.status(204).json(delete required.reviews[username]);
       

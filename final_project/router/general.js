@@ -43,7 +43,7 @@ public_users.get('/', async (req, res) => {
   
   try {
     const filteredBooks = await Promise.resolve(books[0]);
-    return res.send(filteredBooks); 
+    return res.send((filteredBooks)); 
   } 
   
   catch (error) {
@@ -53,12 +53,11 @@ public_users.get('/', async (req, res) => {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:title', async (req, res) => {
-
+public_users.get('/isbn/:isbn', async (req, res) => {
+  
   try {
-    const isbnQuery = req.params.title;
-    let filteredBooks = Object.values(books[0]).filter(book => book.title === isbnQuery);
-    if (isbnQuery) return res.json (filteredBooks);
+    const isbnQuery = req.params.isbn;
+    if (isbnQuery) return res.json (books[0][isbnQuery]);
     return res.json(books);
   }
 
